@@ -54,6 +54,7 @@ def classify(model_folder, image_input, image_dim, class_names):
     
     # Expand the shape of the image array from (224, 224, 3) to (1, 224, 224, 3)
     img_array = np.expand_dims(img_array, axis=0)
+    
     # Normalize the pixel values from [0, 255] to [-1, 1]
     img_array = (img_array / 127.5) - 1
     # Use the model to make a prediction
@@ -76,9 +77,14 @@ uploaded_file = st.file_uploader(label="", type=['png', 'jpg'], accept_multiple_
 if uploaded_file:  # if user uploaded file
         img_display = Image.open(uploaded_file)
         
-        img_size = 224
-        #img = image.img_to_array(uploaded_file)        
-        img = tf.image.resize(img_display, [224,224], preserve_aspect_ratio=False)
+        #############################################let's test it out!
+        img = image.img_to_array(img_display)        
+        img = tf.image.resize(img, [224,224], preserve_aspect_ratio=False)
+
+        
+        ############################################# WORKS LOCALLY
+        #img_size = 224
+        #img = tf.image.resize(img_display, [224,224], preserve_aspect_ratio=False)
         
         
         # main(model_folder, image_input, image_dim):
