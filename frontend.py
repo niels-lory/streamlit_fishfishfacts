@@ -74,10 +74,13 @@ def classify(model_folder, image_input, image_dim, class_names):
 uploaded_file = st.file_uploader(label="", type=['png', 'jpg'], accept_multiple_files=False, key=None, help=None, on_change=None, args=None, kwargs=None, disabled=False, label_visibility="visible")
 
 if uploaded_file:  # if user uploaded file
-        img_size = 224
         img_display = Image.open(uploaded_file)
         
+        img_size = 224
+        #img = image.img_to_array(uploaded_file)        
         img = tf.image.resize(img_display, [224,224], preserve_aspect_ratio=False)
+        
+        
         # main(model_folder, image_input, image_dim):
         pred_1, pred_2, pred_3, pred_4 = classify("models/230203_modelmaker_224px", img, 224, class_names_species)
         pred_5, pred_6, pred_7, pred_8 = classify("models/familymodel", img, 224, class_names_genus)
