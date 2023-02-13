@@ -47,7 +47,11 @@ def classify(model_folder, image_input, image_dim, class_names):
     model_dir = model_folder
     model = keras.models.load_model(model_dir)
     # Convert the image to a numpy array
-    img_array = image.img_to_array(image_input)
+    
+    #img_array = image.img_to_array(image_input)
+    #img_array = np.array(image_input)
+    img_array = img
+    
     # Expand the shape of the image array from (224, 224, 3) to (1, 224, 224, 3)
     img_array = np.expand_dims(img_array, axis=0)
     # Normalize the pixel values from [0, 255] to [-1, 1]
@@ -72,6 +76,7 @@ uploaded_file = st.file_uploader(label="", type=['png', 'jpg'], accept_multiple_
 if uploaded_file:  # if user uploaded file
         img_size = 224
         img_display = Image.open(uploaded_file)
+        
         img = tf.image.resize(img_display, [224,224], preserve_aspect_ratio=False)
         # main(model_folder, image_input, image_dim):
         pred_1, pred_2, pred_3, pred_4 = classify("models/230203_modelmaker_224px", img, 224, class_names_species)
