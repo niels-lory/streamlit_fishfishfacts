@@ -63,11 +63,11 @@ def classify(model_folder, image_input, image_dim, class_names):
     return pred_1, pred_2, pred_3, pred_4
     
 
-st.title('fish fish facts')
+#st.title('fish fish facts')
 
-label = "Upload your image here!"
+#label = "Upload your image here!"
 
-uploaded_file = st.file_uploader(label, type=['png', 'jpg'], accept_multiple_files=False, key=None, help=None, on_change=None, args=None, kwargs=None, disabled=False, label_visibility="visible")
+uploaded_file = st.file_uploader(label="", type=['png', 'jpg'], accept_multiple_files=False, key=None, help=None, on_change=None, args=None, kwargs=None, disabled=False, label_visibility="visible")
 
 if uploaded_file:  # if user uploaded file
         img_size = 224
@@ -76,7 +76,7 @@ if uploaded_file:  # if user uploaded file
         # main(model_folder, image_input, image_dim):
         pred_1, pred_2, pred_3, pred_4 = classify("models/230203_modelmaker_224px", img, 224, class_names_species)
         pred_5, pred_6, pred_7, pred_8 = classify("models/familymodel", img, 224, class_names_genus)
-        st.text(f"Predicted species: \n{pred_1}, \n{pred_2}, \n{pred_3} \nor {pred_4}")
+        st.text(f"Predicted species: \n{pred_1}, \n{pred_2}, \n{pred_3} or \n{pred_4}")
         st.text(f"You think your fish was not among the predictions? \nMaybe you're more lucky searching for the genus: \n{pred_5}, \n{pred_6}, \n{pred_7} or \n{pred_8}")
         st.image(img_display, caption=None, width=None, use_column_width=None, clamp=False, channels="RGB", output_format="auto")
 
