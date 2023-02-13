@@ -17,7 +17,7 @@ tensorflow-addons
 tensorflow-datasets
 tensorflow-estimator
 tensorflow-hub
-tensorflow-macos
+tensorflow
 tensorflow-metadata
 tokenizers
 Pillow
