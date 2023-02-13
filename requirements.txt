@@ -5,10 +5,10 @@ keras
 matplotlib
 numpy
 pandas
-regex==2022.10.31
-huggingface-hub==0.12.0
-scikit-image==0.19.3
-scikit-learn==1.0.2
+regex
+huggingface-hub
+scikit-image
+scikit-learn
 scipy
 tensorboard
 tensorboard-data-server
@@ -20,6 +20,6 @@ tensorflow-hub
 tensorflow-macos
 tensorflow-metadata
 tokenizers
-Pillow==9.3.0
-streamlit==1.18.1
+Pillow
+streamlit
 
