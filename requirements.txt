@@ -1,6 +1,6 @@
 pandas
-numpy==1.18.1
-scikit-learn==0.22
+numpy
+scikit-learn
 h5py
 huggingface-hub
 keras
