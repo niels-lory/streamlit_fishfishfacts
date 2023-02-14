@@ -67,6 +67,14 @@ def classify(model_folder, image_input, image_dim, class_names):
     # Print the predicted class
     return pred_1, pred_2, pred_3, pred_4
     
+def fishfacts(species, column):
+    fish_facts_df = pd.read_csv("data/fish_facts.csv")
+    fish_fact_query = fish_facts_df[fish_facts_df['class_names_transformed'] == species][column]
+    # workaround to get JUST the entry from the pandas DataFrame
+    fish_fact_query = list(fish_fact_query)
+    fish_fact_query = fish_fact_query[0]
+    return fish_fact_query
+
 
 #st.title('fish fish facts')
 
@@ -75,24 +83,103 @@ def classify(model_folder, image_input, image_dim, class_names):
 uploaded_file = st.file_uploader(label="", type=['png', 'jpg'], accept_multiple_files=False, key=None, help=None, on_change=None, args=None, kwargs=None, disabled=False, label_visibility="visible")
 
 if uploaded_file:  # if user uploaded file
-        img_display = Image.open(uploaded_file)
+        #################################### Predictions ####################################
         
-        #############################################let's test it out!
+        # uploaded image for display            
+        img_display = Image.open(uploaded_file)
+        # load IUCN red list legend
+        iucn_legend = Image.open('data/red_list_legend.png')
+        # tranform image dimensions for prediction
         img = image.img_to_array(img_display)        
         img = tf.image.resize(img, [224,224], preserve_aspect_ratio=False)
-
-        
-        ############################################# WORKS LOCALLY
-        #img_size = 224
-        #img = tf.image.resize(img_display, [224,224], preserve_aspect_ratio=False)
-        
-        
-        # main(model_folder, image_input, image_dim):
+        # predict species:
         pred_1, pred_2, pred_3, pred_4 = classify("models/230203_modelmaker_224px", img, 224, class_names_species)
+        # predict genus:
         pred_5, pred_6, pred_7, pred_8 = classify("models/familymodel", img, 224, class_names_genus)
-        st.text(f"Predicted species: \n{pred_1}, \n{pred_2}, \n{pred_3} or \n{pred_4}")
-        st.text(f"You think your fish was not among the predictions? \nMaybe you're more lucky searching for the genus: \n{pred_5}, \n{pred_6}, \n{pred_7} or \n{pred_8}")
-        st.image(img_display, caption=None, width=None, use_column_width=None, clamp=False, channels="RGB", output_format="auto")
+        # loading fish facts
+        conservation_status = fishfacts(pred_1, "category")
+        main_common_name = fishfacts(pred_1,"main_common_name")
+                
+        #################################### Output ####################################
+        
+        # Prediction
+        col1, col2 = st.columns(2)
 
+        with col1:
+            st.header(f':blue[Predicted species] :fish:')
+            st.subheader(f"1. _{pred_1}_ \n2. _{pred_2}_ \n3. _{pred_3}_ \n4. _{pred_4}_")
+            st.caption(f"You think your fish was not among the predictions? Maybe you're more lucky searching for these genus names: {pred_5}, {pred_6}, {pred_7} or {pred_8}")
 
+        with col2:
+            st.header('')
+            # display the uploaded picture
+            st.image(img_display, caption=None, width=None, use_column_width=None, clamp=False, channels="RGB", output_format="auto")
+            st.caption(f'Predicted as _{pred_1}_, common name {main_common_name} ')
+        
+        # Conservation status
+        col1, col2 = st.columns(2)
+        
+        with col1:
+            st.header(f':blue[Conservation status]')
+            st.subheader(f"{conservation_status} \nIUCN red list of species: https://www.iucnredlist.org/ ")  
+        
+        with col2:
+            st.header('')
+            st.image(iucn_legend, caption='')
+        
+        #################################### IUCN text ####################################
+        
+        # rationale
+        with st.container():    
+            st.header(f':fish: :blue[Rationale] :fish:')
+            st.caption('https://www.iucnredlist.org/')
+            rationale = fishfacts(pred_1, "rationale")
+            st.caption(rationale)
+        
+        # geographicrange
+        with st.container():    
+            st.header(f':fish: :blue[Geographic range] :fish:')
+            st.caption('https://www.iucnredlist.org/')
+            geographicrange = fishfacts(pred_1, "geographicrange")
+            st.caption(geographicrange)
 
+        # population
+        with st.container():    
+            st.header(f':fish: :blue[Population] :fish:')
+            st.caption('https://www.iucnredlist.org/')
+            population = fishfacts(pred_1, "population")
+            st.caption(population)
+
+        # habitat
+        with st.container():    
+            st.header(f':fish: :blue[Habitat] :fish:')
+            st.caption('https://www.iucnredlist.org/')
+            habitat = fishfacts(pred_1, "habitat")
+            st.caption(habitat)
+            
+        # threats
+        with st.container():    
+            st.header(f':fish: :blue[Threats] :fish:')
+            st.caption('https://www.iucnredlist.org/')
+            threats = fishfacts(pred_1, "threats")
+            st.caption(threats)
+
+        # conservationmeasures
+        with st.container():    
+            st.header(f':fish: :blue[Conservation measures] :fish:')
+            st.caption('https://www.iucnredlist.org/')
+            conservationmeasures = fishfacts(pred_1, "conservationmeasures")
+            st.caption(conservationmeasures)
+
+        # usetrade
+        with st.container():    
+            st.header(f':fish: :blue[Usetrade] :fish:')
+            st.caption('https://www.iucnredlist.org/')
+            usetrade = fishfacts(pred_1, "usetrade")
+            st.caption(usetrade)
+            
+         # Reference
+        with st.container():    
+            st.header(f':fish: :red[Reference] :fish:')
+            st.caption('IUCN. 2022. The IUCN Red List of Threatened Species. Version 2022-2. https://www.iucnredlist.org. Accessed on [01.02.2023].' )
+             
