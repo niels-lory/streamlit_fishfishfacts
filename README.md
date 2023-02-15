@@ -10,4 +10,4 @@ To check out this project and use the app, please go to [fish fish facts!](https
 
 Our project repo you can access in [here](https://github.com/kaqreal/ds-capstone-project-fish).
 
-![Img](fishfishfacts_logo.png)
+![Img](fishfishfacts_logo_black.png)
