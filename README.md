@@ -2,6 +2,8 @@
 
 ### **fish fish facts!**
 
+![Img](fishfishfacts_logo.png)
+
 Dive in to fish out the facts! 
 
 A classification app for your holiday snapshots or your greatest catch. Raising awareness for species conservation. 
