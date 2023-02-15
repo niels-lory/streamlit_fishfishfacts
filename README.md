@@ -1,6 +1,4 @@
-# ds-streamlit_fishfishfacts
-
-### **fish fish facts!**
+# **fish fish facts!**
 
 Dive in to fish out the facts! 
 
